@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
-import { Element, Link } from 'react-scroll';
+import { Element, Link } from 'react-scroll'
+
 
 export {
     React,

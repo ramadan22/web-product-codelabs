@@ -3,15 +3,16 @@ import { FooterComponent } from '../../components';
 
 class Footer extends React.Component {
     render() {
-        const { addreass, email, phone } = this.props;
+        const { addreass, email, phone, linkDownload } = this.props;
         return(
             <>
-                <div className="footer-container w-full bg-gray-100 px-32 py-20">
-                    <div className="container px-20">
+                <div className="footer-container w-full xl:px-32 xl:py-20 py-5" style={{backgroundColor: '#f5f6f8'}}>
+                    <div className="container mx-auto xl:px-20 px-6">
                         <FooterComponent 
                             addreass={addreass} 
                             email={email} 
-                            phone={phone} />
+                            phone={phone} 
+                            linkDownload={linkDownload} />
                     </div>
                 </div>
             </>
