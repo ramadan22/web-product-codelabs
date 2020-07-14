@@ -1,17 +1,62 @@
-import { React } from '../../libraries';
-import { TitleDescComponent, ThumbnailContentComponent } from '../../components';
+import { React } from '../../libraries'
+import { TitleDescComponent, ThumbnailContentComponent } from '../../components'
+import GlobalStyle from '../../assets/style/GlobalStyle'
+import ModalRegister from '../../modals/ModalRegister'
 
 class SectionContainer extends React.Component {
+  state = {
+      overflow: false,
+      jenisPaket: null
+  }
+  
+  handleCounterChange = (newValue) => {
+    const splitValue = newValue.split(",")
+    this.setState({
+      overflow: splitValue[0],
+      jenisPaket: splitValue[1]
+    })
+  }
+
+  handleCloseModal = (newValue) => {
+    this.setState({
+      overflow: newValue
+    })
+  }
+
   render() {
-    const { displayType } = this.props;
+    const { jenisPaket } = this.state;
+    const { 
+      displayType, 
+      id, 
+      display, 
+      thumbnail, 
+      font_color, 
+      background_color, 
+      font_color_thumbnail, 
+      background_color_thumbnail, 
+      idProduct
+    } = this.props;
     return (
       <>
-        <div className="section-container w-full px-32">
-          <div className="container px-20">
-            <TitleDescComponent title={this.props.title} description={this.props.description} />
-            <div className="mt-5 flex content-center flex-wrap">
-              {this.props.thumbnail && this.props.thumbnail.length > 0 &&
-                this.props.thumbnail.map(row => {
+        {(this.state.overflow) 
+          ? 
+            <>
+              <GlobalStyle overflow={"hidden"} paddingRight={"17px"} /> 
+              <ModalRegister 
+                idProduct={idProduct} 
+                jenisPaket={jenisPaket} 
+                modalActive={true} 
+                onChangeCloseModal={(value) => this.handleCloseModal(value)} />
+            </>
+          : "" }
+        <div id={id} style={{color: font_color, backgroundColor: background_color}} className="section-container w-full xl:px-32 px-0">
+          <div className="container mx-auto xl:px-20 pl-3">
+            <TitleDescComponent 
+              title={this.props.title} 
+              description={this.props.description} />
+            <div className="mt-5 flex content-center flex-wrap items-stretch">
+              {thumbnail && thumbnail.length > 0 &&
+                thumbnail.map(row => {
                   return (
                     <ThumbnailContentComponent
                       key={row.id}
@@ -19,7 +64,11 @@ class SectionContainer extends React.Component {
                       altImage={row.cd_alt_image} 
                       title={row.cd_title}
                       description={row.cd_desc}
-                      displayType={displayType} />
+                      displayType={displayType} 
+                      display={display} 
+                      font_color_thumbnail={font_color_thumbnail} 
+                      background_color_thumbnail={background_color_thumbnail} 
+                      onChangeCounter={(value) => this.handleCounterChange(value)} />
                   )
                 })
               }
